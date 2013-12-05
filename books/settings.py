@@ -8,9 +8,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import dj_database_url
 import os
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+# Static asset configuration
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+            os.path.join(BASE_DIR, 'static'),
+            )
 
 
 # Quick-start development settings - unsuitable for production
@@ -65,6 +81,7 @@ DATABASES = {
     }
 }
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -82,6 +99,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
-
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'))
+
+
+
+# Parse database configuration from $DATABASE_URL
+db = {'username': 'postgres',
+      'password': 'beffy44',
+      'name': 'books',}
+
+DATABASES['default'] = dj_database_url.config(
+                        default='postgres://%s:%s@localhost:5432/%s' % (
+                                db['username'], 
+                                db['password'], 
+                                db['name']))
