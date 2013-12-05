@@ -9,7 +9,7 @@ class Book(models.Model):
     ISBN = models.CharField(max_length = 200)
 
     def get_current_price(self):
-        recent_prices = self.prices.filter(datetime__gte = datetime.now() - timedelta(days=1))
+        recent_prices = self.prices.filter(datetime__gte = datetime.now() - timedelta(hours=8))
         if recent_prices:
             return recent_prices[0]
 
