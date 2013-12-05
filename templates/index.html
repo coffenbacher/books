@@ -1,0 +1,14 @@
+<html>
+
+{% for b in books %}
+<div>
+    <div>ISBN: {{ b.ISBN }}</div>
+    <div>Price: {{ b.get_current_price.price }}</div>
+    <form method="POST">
+        <input type="hidden" value="{{ b.ISBN }}" name="ISBN">
+        <input type="submit" name="Refresh">
+    </form>
+</div>
+{% endfor %}
+
+</html>
