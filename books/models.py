@@ -30,6 +30,8 @@ class Book(models.Model):
             return prices[0].price - prices[1].price
         return 0
 
+    def __unicode__(self):
+        return u'%s - %s' % (self.name, self.ISBN)
 
 
 class BookPrice(models.Model):
