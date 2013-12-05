@@ -1,14 +1,41 @@
 <html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://rawgithub.com/DataTables/DataTables/master/media/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready(function(){
+                    $('#books').dataTable( {
+                            "aaSorting": [[ 4, "desc" ], [ 2, "desc" ]] ,
+                            "iDisplayLength": -1
+                        } );
+            });
+        </script>
 
-{% for b in books %}
-<div>
-    <div>ISBN: {{ b.ISBN }}</div>
-    <div>Price: {{ b.get_current_price.price }}</div>
-    <form method="POST">
-        <input type="hidden" value="{{ b.ISBN }}" name="ISBN">
-        <input type="submit" name="Refresh">
-    </form>
-</div>
-{% endfor %}
+        <link rel="stylesheet" href="https://rawgithub.com/DataTables/DataTables/master/media/css/jquery.dataTables.css">
+
+    </head>
+
+<table id="books">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>ISBN</th>
+            <th>Current price</th>
+            <th>Last updated</th>
+            <th>Change in price</th>
+        </tr>
+
+    <tbody>
+        {% for b in books %}
+            <tr>
+                <td>{{ b.name }}</td>
+                <td>{{ b.ISBN }}</td>
+                <td>{{ b.get_current_price.price }}</td>
+                <td>{{ b.get_current_price.datetime }}</td>
+                <td>{{ b.get_price_delta }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 </html>

@@ -24,6 +24,14 @@ class Book(models.Model):
         else:
             return False
 
+    def get_price_delta(self):
+        prices = self.prices.all().order_by('-datetime')
+        if prices.count() >= 2:
+            return prices[0].price - prices[1].price
+        return 0
+
+
+
 class BookPrice(models.Model):
     book = models.ForeignKey(Book, related_name='prices')
     datetime = models.DateTimeField()
